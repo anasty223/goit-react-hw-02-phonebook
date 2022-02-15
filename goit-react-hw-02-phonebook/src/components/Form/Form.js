@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import s from "./Form.module.css";
 class Form extends Component {
   state = { name: "", number: "" };
 
@@ -9,13 +9,19 @@ class Form extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(this.state);
+    const { name, number } = this.state;
+    this.props.onSubmit({ name, number });
+
+    this.reset();
+  };
+  reset = () => {
+    this.setState({ name: "", number: "" });
   };
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          {" "}
+      <form onSubmit={this.handleSubmit} className={s.form}>
+        <label className={s.label}>
           Name
           <input
             type="text"
@@ -25,6 +31,7 @@ class Form extends Component {
             required
             value={this.state.name}
             onChange={this.handleChange}
+            className={s.input}
           />
         </label>
         <label>
@@ -37,15 +44,11 @@ class Form extends Component {
             required
             value={this.state.number}
             onChange={this.handleChange}
+            className={s.input}
           />
         </label>
-        {/* <textarea
-          className="TodoEditor__textarea"
-          value={this.state.name}
-          onChange={this.handleChange}
-        ></textarea> */}
-        <button type="submit" className="TodoEditor__button">
-          Сохранить
+        <button type="submit" className={s.button}>
+          Add contact
         </button>
       </form>
     );
